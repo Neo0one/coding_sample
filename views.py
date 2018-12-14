@@ -69,17 +69,17 @@ def str2List2leafCert(s):
             arr.append(item)
     return arr[0]
 
-# 将path路径中的txt文件内容独处，并返回值html
+
 def readOpenSSL(path):
     with open(path) as f:
         content = f.read()
     return content
-# 计算时间t与现在时间的差值
-def sqlTimeLeft(sqlTime):
+
+  def sqlTimeLeft(sqlTime):
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     timeLeft = (int(sqlTime[0:4])-int(nowTime[0:4]))*365*24 + (int(sqlTime[4:6])-int(nowTime[5:7]))*24 + (int(sqlTime[6:8])-int(nowTime[8:10]))*1
     return timeLeft
-# 注册过滤器
+
 env = app.jinja_env
 env.filters['sqlTimeReadable'] = sqlTimeReadable #注册自定义过滤器
 env.filters['bool_translator'] = bool_translator #注册自定义过滤器
@@ -90,7 +90,7 @@ env.filters['returnlogarr'] = returnlogarr #注册自定义过滤器
 env.filters['sqlTimeLeft'] = sqlTimeLeft
 
 
-# 主页
+# index page
 @app.route('/')
 def index():
     rel = sql_op.get_cert_num()
@@ -112,7 +112,7 @@ def index():
     # test
     # return render_template('page-blank.html')
 
-# SSL　证书搜索栏
+# SSL　cert search
 @app.route('/search_SSL', methods=['POST', 'GET'])
 def search_SSL():
     global DEBUG
@@ -121,7 +121,7 @@ def search_SSL():
     return render_template('search_SSLCert.html')
 
 
-# 所有证书搜索结果列表
+# search result
 @app.route('/resultCertList', methods=['POST', 'GET'])
 def resultCertList():
     global DEBUG
@@ -180,7 +180,7 @@ def resultCertList():
 
     return render_template('result_cert_list.html')
 
-# 无效证书搜索结果列表
+# invalid cert search result
 @app.route('/resultCertList_invalid', methods=['POST', 'GET'])
 def resultCertList_invalid():
     global DEBUG
@@ -239,7 +239,7 @@ def resultCertList_invalid():
 
     return render_template('result_cert_list.html')
 
-# 单一证书信息显示
+# cert info dispaly
 @app.route('/result_Cert', methods=['POST', 'GET'])
 def result_Cert():
     filename_sha1 = request.args.get("filename_sha1")
@@ -254,7 +254,7 @@ def result_Cert():
     else:
         return render_template('result_cert_NOtFOUND.html')
 
-# SSL 会话搜索
+# SSL session search
 @app.route('/search_session', methods=['POST', 'GET'])
 def search_session():
     global DEBUG
@@ -262,7 +262,7 @@ def search_session():
         logging.info("search_SSL():search_session.html will submit form to resultCertList()")
     return render_template('search_session.html')
 
-# SSL 会话搜索结果列表
+# SSL session search result
 @app.route('/resultSessionList', methods=['POST', 'GET'])
 def resultSessionList():
     global DEBUG
@@ -320,7 +320,7 @@ def resultSessionList():
                 pass
 
 
-# SSL　证书统计页面
+# SSL　cert statistic
 @app.route('/cert_stat', methods=['POST', 'GET'])
 def cert_stat():
     global DEBUG
